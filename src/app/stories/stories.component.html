@@ -1,15 +1,26 @@
 <div class="main-content">
-  <ol>
-    <li *ngFor="let item of items; let i = index" class="post">
-      <item class="item-block" itemID="{{ i + 1 }}"></item>
-    </li>
-  </ol>
-  <div class="nav">
-    <a href="" class="prev">
-      ‹ Prev
-    </a>
-    <a href="" class="more">
-      More ›
-    </a>
+   <p class="job-header" *ngIf="storiesType === 'jobs'">
+    These are jobs at startups that were funded by Y Combinator. 
+    You can also get a job at a YC startup through <a href="https://triplebyte.com/?ref=yc_jobs">Triplebyte</a>.
+    </p>
+  <div class="loading-section" *ngIf="!items">
+    <div class="loader">
+      Loading...
+    </div>
+  </div>
+  <div *ngIf="items">
+    <ol start="{{ listStart }}">
+      <li *ngFor="let item of items" class="post">
+        <app-item class="item-block" [item]="item"></app-item>
+      </li>
+    </ol>
+    <div class="nav">
+      <a *ngIf="listStart !== 1" [routerLink]="['/' + storiesType, pageNum - 1]" class="prev">
+        ‹ Prev
+      </a>
+      <a *ngIf="items.length === 30" [routerLink]="['/' + storiesType, pageNum + 1]" class="more">
+        More ›
+      </a>
+    </div>
   </div>
 </div>
